@@ -6,10 +6,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Bars3Icon,
-  BugAntIcon,
-  UserCircleIcon,
-  ChartBarIcon,
-  GiftIcon,
 } from "@heroicons/react/24/outline";
 import {
   FaucetButton,
@@ -23,17 +19,7 @@ type HeaderMenuLink = {
   icon?: React.ReactNode;
 };
 
-export const menuLinks: HeaderMenuLink[] = [
-  {
-    label: "Home",
-    href: "/",
-  },
-  {
-    label: "Debug Contracts",
-    href: "/debug",
-    icon: <BugAntIcon className="h-4 w-4" />,
-  },
-];
+export const menuLinks: HeaderMenuLink[] = [];
 
 export const HeaderMenuLinks = () => {
   const pathname = usePathname();
@@ -61,23 +47,13 @@ export const HeaderMenuLinks = () => {
   );
 };
 
-/**
- * Site header
- */
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
-  const profileSidebarRef = useRef<HTMLDivElement>(null);
 
   useOutsideClick(
     burgerMenuRef,
     useCallback(() => setIsDrawerOpen(false), []),
-  );
-
-  useOutsideClick(
-    profileSidebarRef,
-    useCallback(() => setIsProfileMenuOpen(false), []),
   );
 
   return (
@@ -110,8 +86,8 @@ export const Header = () => {
             <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
           </div>
           <div className="flex flex-col">
-            <span className="font-bold leading-tight">Scaffold-ETH-Monad</span>
-            <span className="text-xs">Ethereum dev stack</span>
+            <span className="font-bold leading-tight">muffled bird</span>
+            <span className="text-xs">be a muffled bird</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
@@ -121,49 +97,6 @@ export const Header = () => {
       <div className="navbar-end flex-grow mr-4 flex items-center space-x-4">
         <RainbowKitCustomConnectButton />
         <FaucetButton />
-        <button
-          className="btn btn-ghost"
-          onClick={() => setIsProfileMenuOpen((prevState) => !prevState)}
-        >
-          <UserCircleIcon className="h-6 w-6" />
-        </button>
-      </div>
-
-      {/* Sidebar */}
-      <div
-        ref={profileSidebarRef}
-        className={`fixed top-0 right-0 h-full w-64 bg-base-100 shadow-lg transform transition-transform duration-300 ${
-          isProfileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="p-4">
-          <button
-            className="btn btn-ghost"
-            onClick={() => setIsProfileMenuOpen(false)}
-          >
-            Close
-          </button>
-          <ul className="mt-4">
-            <li>
-              <Link href="/predictions" className="flex items-center gap-2">
-                <ChartBarIcon className="h-4 w-4" />
-                View Predictions
-              </Link>
-            </li>
-            <li>
-              <Link href="/stakes" className="flex items-center gap-2">
-                <GiftIcon className="h-4 w-4" />
-                Stakes
-              </Link>
-            </li>
-            <li>
-              <Link href="/tips" className="flex items-center gap-2">
-                <BugAntIcon className="h-4 w-4" />
-                Tips
-              </Link>
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   );

@@ -42,11 +42,44 @@ const PredictionSite = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+   <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
       <div className="text-center py-8 bg-gradient-to-r from-purple-600 to-pink-500">
-        <h1 className="text-4xl font-bold">Prediction Market</h1>
-        <p className="text-lg mt-2">Bet on the future with confidence</p>
+        <h1 className="text-4xl font-bold" style={{ fontFamily: "'Nosifer', sans-serif" }}>
+          monad muffled birdy market
+        </h1>
+        <p className="text-3xl mt-2" style={{ fontFamily: "'Rubik Scribble', sans-serif" }}>
+          be a muffled bird on the monad market!
+        </p>
+      </div>
+
+      {/* Marquee */}
+      <div className="w-full bg-gray-800 py-2">
+        <div className="overflow-hidden whitespace-nowrap">
+        <div className="inline-block animate-marquee space-x-8">
+          <div
+            className="inline-block space-x-8"
+            style={{
+              animation: 'marquee 50s linear infinite',
+              whiteSpace: 'nowrap',
+                   display: 'inline-block',
+            }}
+          >
+            {predictions.slice(0, 8).map((prediction) => {
+              const randomYesAmount = (Math.random() * 0.1).toFixed(3);
+              return (
+                <span
+                  key={prediction.id}
+                  className="text-sm text-gray-300 font-medium px-4"
+                >
+                  0x9084... puts their money where their mouth is with a yes of{" "}
+                  {randomYesAmount} MON on {prediction.category}!
+                </span>
+              );
+            })}
+          </div>
+          </div>
+        </div>
       </div>
 
       {/* Category Menu */}
@@ -101,7 +134,6 @@ const PredictionSite = () => {
           const totalVotes = prediction.yesVotes + prediction.noVotes;
           const yesPercentage = ((prediction.yesVotes / totalVotes) * 100).toFixed(1);
           const noPercentage = (100 - parseFloat(yesPercentage)).toFixed(1);
-          
 
           return (
             <div
