@@ -10,36 +10,80 @@ import {
 } from "@heroicons/react/24/outline";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
-// Import data
 import { sportsPredictions } from "./predicts/sports";
 import { newsPredictions } from "./predicts/news";
 import { entertainmentPredictions } from "./predicts/entertainment";
 import { politicsPredictions } from "./predicts/politics";
 
-const categories = ["Sports", "Politics", "News", "Entertainment"];
-const filters = ["Recent", "Trending", "2025"];
 
-// Combine all predictions
-const allPredictions = [
+const categories = ["Sports", "Politics", "News", "Entertainment"];
+
+type Prediction = {
+  id: number;
+  title: string;
+  category: string;
+  yesVotes: number;
+  noVotes: number;
+};
+  
+  
+const predictions = [
   ...sportsPredictions,
   ...newsPredictions,
   ...entertainmentPredictions,
   ...politicsPredictions,
 ];
 
+// const predictions: Prediction[] = [
+//   // Sports Predictions
+//   {
+//     id: 1,
+//     title: "Will Team A win the championship?",
+//     category: "Sports",
+//     yesVotes: 500,
+//     noVotes: 200,
+//   },
+//   {
+//     id: 2,
+//     title: "Will Player X score more than 30 points?",
+//     category: "Sports",
+//     yesVotes: 300,
+//     noVotes: 400,
+//   },
+//   {
+//     id: 3,
+//     title: "Will the game go into overtime?",
+//     category: "Sports",
+//     yesVotes: 250,
+//     noVotes: 350,
+//   },
+//   // Add more Sports-related predictions as needed...
+
+//   // Existing Predictions (if needed)
+//   ...Array.from({ length: 13 }, (_, i) => ({
+//     id: i + 4, // Ensure unique IDs
+//     title: `Prediction ${i + 4}`,
+//     category: categories[i % categories.length],
+//     yesVotes: Math.floor(Math.random() * 1000),
+//     noVotes: Math.floor(Math.random() * 1000),
+//   })),
+// ];
+
+const filters = ["Recent", "Trending", "2025"];
+
 const PredictionSite = () => {
   const [activeCategory, setActiveCategory] = useState("Sports");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState(filters[0]);
 
-  const filteredPredictions = allPredictions.filter(
+  const filteredPredictions = predictions.filter(
     (prediction) =>
       prediction.category === activeCategory &&
       prediction.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+   <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
       <div className="text-center py-8 bg-gradient-to-red from-yellow-600 to-pink-500">
         <h1 className="text-4xl font-bold" style={{ fontFamily: "'Nosifer', sans-serif" }}>
@@ -53,15 +97,16 @@ const PredictionSite = () => {
       {/* Marquee */}
       <div className="w-full bg-gray-800 py-2">
         <div className="overflow-hidden whitespace-nowrap">
+        <div className="inline-block animate-marquee space-x-8">
           <div
             className="inline-block space-x-8"
             style={{
-              animation: "marquee 50s linear infinite",
-              whiteSpace: "nowrap",
-              display: "inline-block",
+              animation: 'marquee 50s linear infinite',
+              whiteSpace: 'nowrap',
+                   display: 'inline-block',
             }}
           >
-            {allPredictions.slice(0, 8).map((prediction) => {
+            {predictions.slice(0, 8).map((prediction) => {
               const randomYesAmount = (Math.random() * 0.1).toFixed(3);
               return (
                 <span
@@ -73,6 +118,7 @@ const PredictionSite = () => {
                 </span>
               );
             })}
+          </div>
           </div>
         </div>
       </div>
