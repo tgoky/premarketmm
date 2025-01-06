@@ -44,7 +44,7 @@ const PredictionSite = () => {
   return (
    <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
-      <div className="text-center py-8 bg-gradient-to-r from-purple-600 to-pink-500">
+      <div className="text-center py-8 bg-gradient-to-red from-yellow-600 to-pink-500">
         <h1 className="text-4xl font-bold" style={{ fontFamily: "'Nosifer', sans-serif" }}>
           monad muffled birdy market
         </h1>
@@ -83,7 +83,7 @@ const PredictionSite = () => {
       </div>
 
       {/* Category Menu */}
-      <div className="flex justify-center space-x-6 py-4 bg-gray-800">
+      <div className="flex justify-center space-x-6 py-4 bg-gradient-to-r from-yellow-600 to-pink-500">
         {categories.map((category) => (
           <button
             key={category}
