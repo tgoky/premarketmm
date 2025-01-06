@@ -10,39 +10,36 @@ import {
 } from "@heroicons/react/24/outline";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
+// Import data
+import { sportsPredictions } from "./predicts/sports";
+import { newsPredictions } from "./predicts/news";
+import { entertainmentPredictions } from "./predicts/entertainment";
+import { politicsPredictions } from "./predicts/politics";
+
 const categories = ["Sports", "Politics", "News", "Entertainment"];
-
-type Prediction = {
-  id: number;
-  title: string;
-  category: string;
-  yesVotes: number;
-  noVotes: number;
-};
-
-const predictions: Prediction[] = Array.from({ length: 16 }, (_, i) => ({
-  id: i + 1,
-  title: `Prediction ${i + 1}`,
-  category: categories[i % categories.length],
-  yesVotes: Math.floor(Math.random() * 1000),
-  noVotes: Math.floor(Math.random() * 1000),
-}));
-
 const filters = ["Recent", "Trending", "2025"];
+
+// Combine all predictions
+const allPredictions = [
+  ...sportsPredictions,
+  ...newsPredictions,
+  ...entertainmentPredictions,
+  ...politicsPredictions,
+];
 
 const PredictionSite = () => {
   const [activeCategory, setActiveCategory] = useState("Sports");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState(filters[0]);
 
-  const filteredPredictions = predictions.filter(
+  const filteredPredictions = allPredictions.filter(
     (prediction) =>
       prediction.category === activeCategory &&
       prediction.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-   <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
       <div className="text-center py-8 bg-gradient-to-red from-yellow-600 to-pink-500">
         <h1 className="text-4xl font-bold" style={{ fontFamily: "'Nosifer', sans-serif" }}>
@@ -56,16 +53,15 @@ const PredictionSite = () => {
       {/* Marquee */}
       <div className="w-full bg-gray-800 py-2">
         <div className="overflow-hidden whitespace-nowrap">
-        <div className="inline-block animate-marquee space-x-8">
           <div
             className="inline-block space-x-8"
             style={{
-              animation: 'marquee 50s linear infinite',
-              whiteSpace: 'nowrap',
-                   display: 'inline-block',
+              animation: "marquee 50s linear infinite",
+              whiteSpace: "nowrap",
+              display: "inline-block",
             }}
           >
-            {predictions.slice(0, 8).map((prediction) => {
+            {allPredictions.slice(0, 8).map((prediction) => {
               const randomYesAmount = (Math.random() * 0.1).toFixed(3);
               return (
                 <span
@@ -77,7 +73,6 @@ const PredictionSite = () => {
                 </span>
               );
             })}
-          </div>
           </div>
         </div>
       </div>
