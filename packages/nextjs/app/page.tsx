@@ -165,75 +165,75 @@ const [voteAmount, setVoteAmount] = useState<number>(0.1);
 
       {/* Predictions Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-8">
-        {filteredPredictions.map((prediction) => {
-          const totalVotes = prediction.yesVotes + prediction.noVotes;
-          const yesPercentage = ((prediction.yesVotes / totalVotes) * 100).toFixed(1);
-          const noPercentage = (100 - parseFloat(yesPercentage)).toFixed(1);
+  {filteredPredictions.map((prediction) => {
+    const totalVotes = prediction.yesVotes + prediction.noVotes;
+    const yesPercentage = ((prediction.yesVotes / totalVotes) * 100).toFixed(1);
+    const noPercentage = (100 - parseFloat(yesPercentage)).toFixed(1);
 
-          return (
-            <div
-              key={prediction.id}
-              className="bg-gray-800 rounded-lg p-6 shadow-lg text-center"
-            >
-              <h3 className="font-bold text-lg">{prediction.title}</h3>
-              <p className="text-sm text-gray-400 mt-2">
-                Category: {prediction.category}
-              </p>
-              <div className="mt-4">
-                <ResponsiveContainer width="100%" height={100}>
-                  <PieChart>
-                    <Pie
-                      data={[
-                        { name: "Yes", value: prediction.yesVotes },
-                        { name: "No", value: prediction.noVotes },
-                      ]}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={30}
-                      outerRadius={50}
-                      paddingAngle={5}
-                      dataKey="value"
-                    >
-                      <Cell key="Yes" fill="#10B981" />
-                      <Cell key="No" fill="#EF4444" />
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="flex justify-between items-center mt-4">
-                <button
-                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg"
-                  onClick={() => handleVoteClick(prediction, "yes")}
-                >
-                  Yes
-                </button>
-                <button
-                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg"
-                  onClick={() => handleVoteClick(prediction, "no")}
-                >
-                  No
-                </button>
-              </div>
-              <p className="mt-4 text-sm">
-                Yes: {yesPercentage}% | No: {noPercentage}%
-              </p>
-            </div>
-          );
-        })}
-      </div>
+    const isActive = selectedPrediction?.id === prediction.id;
 
-       {/* Voting Modal */}
-       {selectedPrediction && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center">
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-96">
-            <h3 className="text-lg font-bold mb-4">
-              {selectedPrediction.voteType.toUpperCase()} Prediction
-            </h3>
+    return (
+      <div
+        key={prediction.id}
+        className="bg-gray-800 rounded-lg p-6 shadow-lg text-center"
+      >
+        <h3 className="font-bold text-lg">{prediction.title}</h3>
+        <p className="text-sm text-gray-400 mt-2">Category: {prediction.category}</p>
+        <div className="mt-4">
+          <ResponsiveContainer width="100%" height={100}>
+            <PieChart>
+              <Pie
+                data={[
+                  { name: "Yes", value: prediction.yesVotes },
+                  { name: "No", value: prediction.noVotes },
+                ]}
+                cx="50%"
+                cy="50%"
+                innerRadius={30}
+                outerRadius={50}
+                paddingAngle={5}
+                dataKey="value"
+              >
+                <Cell key="Yes" fill="#10B981" />
+                <Cell key="No" fill="#EF4444" />
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="flex justify-between items-center mt-4">
+          <button
+            className={`${
+              isActive && selectedPrediction?.voteType === "yes"
+                ? "bg-green-700"
+                : "bg-green-500 hover:bg-green-600"
+            } text-white font-bold py-2 px-4 rounded-lg`}
+            onClick={() => handleVoteClick(prediction, "yes")}
+          >
+            Yes
+          </button>
+          <button
+            className={`${
+              isActive && selectedPrediction?.voteType === "no"
+                ? "bg-red-700"
+                : "bg-red-500 hover:bg-red-600"
+            } text-white font-bold py-2 px-4 rounded-lg`}
+            onClick={() => handleVoteClick(prediction, "no")}
+          >
+            No
+          </button>
+        </div>
+        <p className="mt-4 text-sm">
+          Yes: {yesPercentage}% | No: {noPercentage}%
+        </p>
+
+        {/* Voting Interface */}
+        {isActive && (
+          <div className="mt-4 bg-gray-700 p-4 rounded-lg">
             <textarea
               readOnly
               value={voteAmount.toFixed(2)}
-              className="w-full bg-gray-700 text-white rounded-lg px-4 py-2 mb-4 text-right"
+              className="w-full bg-gray-800 text-white rounded-lg px-4 py-2 mb-4 text-right"
             />
             <div className="flex justify-between mb-4">
               <button
@@ -270,9 +270,12 @@ const [voteAmount, setVoteAmount] = useState<number>(0.1);
               {(voteAmount * 2).toFixed(2)} MON
             </button>
           </div>
-        </div>
-      )}
- 
+        )}
+      </div>
+    );
+  })}
+</div>
+
     </div>
   );
 };
