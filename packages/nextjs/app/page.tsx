@@ -39,6 +39,16 @@ const filters = ["Recent", "Trending", "2025"];
 
 
 const PredictionSite = () => {
+
+  <style>
+  {`
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      190% { opacity: 0.5; }
+    }
+  `}
+</style>
+
   const [activeCategory, setActiveCategory] = useState("Sports");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState(filters[0]);
@@ -77,6 +87,8 @@ const [voteAmount, setVoteAmount] = useState<number>(0.1);
   };
 
   return (
+
+    
    <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
       <div className="text-center py-8 bg-gradient-to-red from-yellow-600 to-pink-500">
@@ -175,8 +187,23 @@ const [voteAmount, setVoteAmount] = useState<number>(0.1);
     return (
       <div
         key={prediction.id}
-        className="bg-gray-800 rounded-lg p-6 shadow-lg text-center"
+        className="bg-gray-800 rounded-lg p-6 shadow-lg text-center relative"
+        style={{ position: "relative" }}
       >
+        {/* Live Indicator */}
+        <div
+          style={{
+            position: "absolute",
+            top: "8px",
+            left: "8px",
+            width: "10px",
+            height: "10px",
+            borderRadius: "50%",
+            backgroundColor: "#10B981",
+            boxShadow: "0 0 10px #10B981",
+            animation: "blink 1s infinite",
+          }}
+        ></div>
         <h3 className="font-bold text-lg">{prediction.title}</h3>
         <p className="text-sm text-gray-400 mt-2">Category: {prediction.category}</p>
         <div className="mt-4">
@@ -230,11 +257,16 @@ const [voteAmount, setVoteAmount] = useState<number>(0.1);
         {/* Voting Interface */}
         {isActive && (
           <div className="mt-4 bg-gray-700 p-4 rounded-lg">
-            <textarea
-              readOnly
-              value={voteAmount.toFixed(2)}
-              className="w-full bg-gray-800 text-white rounded-lg px-4 py-2 mb-4 text-right"
-            />
+  <textarea
+  readOnly
+  value={voteAmount.toFixed(2)}
+  className="w-full bg-gray-800 text-white rounded-lg px-4 py-2 mb-4 text-right"
+  style={{
+    fontSize: "1.5rem", // Increases the font size of the text
+    lineHeight: "1.2",  
+    textAlign: "center" // Adjusts line spacing if needed
+  }}
+/>
             <div className="flex justify-between mb-4">
               <button
                 onClick={() => handleIncrement(1)}
@@ -266,7 +298,7 @@ const [voteAmount, setVoteAmount] = useState<number>(0.1);
                   : "bg-red-500 hover:bg-red-600"
               }`}
             >
-              Buy {selectedPrediction.voteType.toUpperCase()} to win{" "}
+              Say {selectedPrediction.voteType.toUpperCase()} to win{" "}
               {(voteAmount * 2).toFixed(2)} MON
             </button>
           </div>
@@ -275,6 +307,7 @@ const [voteAmount, setVoteAmount] = useState<number>(0.1);
     );
   })}
 </div>
+
 
     </div>
   );
