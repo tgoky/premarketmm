@@ -34,53 +34,47 @@ const predictions = [
   ...politicsPredictions,
 ];
 
-// const predictions: Prediction[] = [
-//   // Sports Predictions
-//   {
-//     id: 1,
-//     title: "Will Team A win the championship?",
-//     category: "Sports",
-//     yesVotes: 500,
-//     noVotes: 200,
-//   },
-//   {
-//     id: 2,
-//     title: "Will Player X score more than 30 points?",
-//     category: "Sports",
-//     yesVotes: 300,
-//     noVotes: 400,
-//   },
-//   {
-//     id: 3,
-//     title: "Will the game go into overtime?",
-//     category: "Sports",
-//     yesVotes: 250,
-//     noVotes: 350,
-//   },
-//   // Add more Sports-related predictions as needed...
-
-//   // Existing Predictions (if needed)
-//   ...Array.from({ length: 13 }, (_, i) => ({
-//     id: i + 4, // Ensure unique IDs
-//     title: `Prediction ${i + 4}`,
-//     category: categories[i % categories.length],
-//     yesVotes: Math.floor(Math.random() * 1000),
-//     noVotes: Math.floor(Math.random() * 1000),
-//   })),
-// ];
-
 const filters = ["Recent", "Trending", "2025"];
+
+
 
 const PredictionSite = () => {
   const [activeCategory, setActiveCategory] = useState("Sports");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState(filters[0]);
+  const [selectedPrediction, setSelectedPrediction] = useState<
+  (Prediction & { voteType: string }) | null
+>(null);
+const [voteAmount, setVoteAmount] = useState<number>(0.1);
 
   const filteredPredictions = predictions.filter(
     (prediction) =>
       prediction.category === activeCategory &&
       prediction.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleVoteClick = (prediction: Prediction, voteType: string) => {
+    setSelectedPrediction({ ...prediction, voteType });
+    setVoteAmount(0.1); // Reset the default amount
+  };
+
+  const handleIncrement = (amount: number) => {
+    setVoteAmount((prev) => parseFloat((prev + amount).toFixed(2)));
+  };
+
+  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setVoteAmount(parseFloat(event.target.value));
+  };
+
+  const handleVoteSubmit = () => {
+    if (!selectedPrediction) return;
+
+    const potentialWin = (voteAmount * 2).toFixed(2);
+    alert(
+      `You voted ${selectedPrediction.voteType.toUpperCase()} with ${voteAmount} MON. Potential win: ${potentialWin} MON!`
+    );
+    setSelectedPrediction(null); // Reset after submission
+  };
 
   return (
    <div className="min-h-screen bg-gray-900 text-white">
@@ -208,10 +202,16 @@ const PredictionSite = () => {
                 </ResponsiveContainer>
               </div>
               <div className="flex justify-between items-center mt-4">
-                <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg">
+                <button
+                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg"
+                  onClick={() => handleVoteClick(prediction, "yes")}
+                >
                   Yes
                 </button>
-                <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg">
+                <button
+                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg"
+                  onClick={() => handleVoteClick(prediction, "no")}
+                >
                   No
                 </button>
               </div>
@@ -222,6 +222,57 @@ const PredictionSite = () => {
           );
         })}
       </div>
+
+       {/* Voting Modal */}
+       {selectedPrediction && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center">
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-96">
+            <h3 className="text-lg font-bold mb-4">
+              {selectedPrediction.voteType.toUpperCase()} Prediction
+            </h3>
+            <textarea
+              readOnly
+              value={voteAmount.toFixed(2)}
+              className="w-full bg-gray-700 text-white rounded-lg px-4 py-2 mb-4 text-right"
+            />
+            <div className="flex justify-between mb-4">
+              <button
+                onClick={() => handleIncrement(1)}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
+              >
+                +1
+              </button>
+              <button
+                onClick={() => handleIncrement(10)}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
+              >
+                +10
+              </button>
+            </div>
+            <input
+              type="range"
+              min="0.1"
+              max="100"
+              step="0.1"
+              value={voteAmount}
+              onChange={handleSliderChange}
+              className="w-full"
+            />
+            <button
+              onClick={handleVoteSubmit}
+              className={`w-full py-2 mt-4 rounded-lg font-bold ${
+                selectedPrediction.voteType === "yes"
+                  ? "bg-green-500 hover:bg-green-600"
+                  : "bg-red-500 hover:bg-red-600"
+              }`}
+            >
+              Buy {selectedPrediction.voteType.toUpperCase()} to win{" "}
+              {(voteAmount * 2).toFixed(2)} MON
+            </button>
+          </div>
+        </div>
+      )}
+ 
     </div>
   );
 };
