@@ -12,7 +12,7 @@ import "hardhat-deploy-ethers";
 
 // If not set, it uses the hardhat account 0 private key.
 const deployerPrivateKey =
-  process.env.DEPLOYER_PRIVATE_KEY ?? "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+  process.env.DEPLOYER_PRIVATE_KEY ?? "b49a6be9115d615b51d33b9ac9f475c508b2e2947acf48f2228a43402458d1fc";
 
 // If not set, it uses ours Etherscan default API key.
 // const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
@@ -35,7 +35,7 @@ const config: HardhatUserConfig = {
       },
     ],
   },
-  defaultNetwork: "localhost",
+  defaultNetwork: "monadDevnet",
   namedAccounts: {
     deployer: {
       // By default, it will take the first Hardhat account as the deployer
@@ -65,8 +65,10 @@ const config: HardhatUserConfig = {
         network: "monadDevnet",
         chainId: 41454,
         urls: {
-          browserURL: process.env.MONAD_EXPLORER_URL ?? "",
-          apiURL: process.env.MONAD_EXPLORER_URL ? `${process.env.MONAD_EXPLORER_URL}/api` : "",
+          browserURL: process.env.MONAD_EXPLORER_URL ?? "https://brightstar-884.devnet1.monad.xyz/",
+          apiURL: process.env.MONAD_EXPLORER_URL
+            ? `${process.env.MONAD_EXPLORER_URL}/api`
+            : "https://brightstar-884.devnet1.monad.xyz/",
         },
       },
     ],

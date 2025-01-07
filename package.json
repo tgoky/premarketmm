@@ -45,6 +45,7 @@
     "node": ">=18.18.0"
   },
   "dependencies": {
+    "ethers": "5.7.1",
     "recharts": "^2.15.0"
   }
 }

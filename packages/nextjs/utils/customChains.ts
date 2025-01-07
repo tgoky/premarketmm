@@ -3,7 +3,7 @@ import { defineChain } from "viem";
 // TODO: Add Chain details here.
 export const monadDevnet = defineChain({
   id: 41454,
-  name: "",
+  name: "Monad Devnet",
   nativeCurrency: { name: "Monad", symbol: "MON", decimals: 18 },
   rpcUrls: {
     default: {
