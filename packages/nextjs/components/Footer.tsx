@@ -45,7 +45,7 @@ export const Footer = () => {
           <div className="flex justify-center items-center gap-2 text-sm w-full">
             <div className="text-center">
               {/* TODO: add the scaffold-eth-monad repo link */}
-              <a href="https://github.com/scaffold-eth/se-2" target="_blank" rel="noreferrer" className="link">
+              <a href="https://x.com/muffledbird" target="_blank" rel="noreferrer" className="link">
                 @muffledbird
               </a>
             </div>
