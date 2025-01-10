@@ -4,6 +4,7 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import muffledBlackPng from "../public/muffled-black.jpg";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { useNotification } from "~~/app/context/NotificationContext";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
@@ -16,8 +17,6 @@ type HeaderMenuLink = {
 };
 
 export const menuLinks: HeaderMenuLink[] = [];
-
-const logoImg = "/packages/nextjs/components/pics/muffled-black.PNG";
 
 export const HeaderMenuLinks = () => {
   const pathname = usePathname();
@@ -84,7 +83,7 @@ export const Header = () => {
         </div>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
           <div className="flex relative w-6 h-6">
-            <Image alt="SE2 logo" className="cursor-pointer" fill src={logoImg} />
+            <Image alt="SE2 logo" className="cursor-pointer" fill src={muffledBlackPng} />
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">muffled bird</span>
