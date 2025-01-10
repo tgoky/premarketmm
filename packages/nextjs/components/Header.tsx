@@ -4,7 +4,7 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import muffledBlackPng from "../public/muffled-black.jpg";
+import muffledBlackPng from "../components/pics/muffled-black.jpg";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { useNotification } from "~~/app/context/NotificationContext";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
