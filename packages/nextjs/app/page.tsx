@@ -51,7 +51,7 @@ const PredictionSite = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState(filters[0]);
   const [selectedPrediction, setSelectedPrediction] = useState<(Prediction & { voteType: string }) | null>(null);
-  const [voteAmount, setVoteAmount] = useState<number>(0.034);
+  const [voteAmount, setVoteAmount] = useState<number>(0.5);
   const [contract, setContract] = useState<ethers.Contract | null>(null);
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const PredictionSite = () => {
 
   const handleVoteClick = (prediction: Prediction, voteType: string) => {
     setSelectedPrediction({ ...prediction, voteType });
-    setVoteAmount(0.034); // Reset the default amount
+    setVoteAmount(0.5); // Reset the default amount
   };
 
   const handleIncrement = (amount: number) => {
@@ -154,7 +154,7 @@ const PredictionSite = () => {
               }}
             >
               {predictions.slice(0, 8).map(prediction => {
-                const randomYesAmount = (Math.random() * 0.034).toFixed(3);
+                const randomYesAmount = (Math.random() * 0.5).toFixed(3);
                 return (
                   <span key={prediction.id} className="text-sm text-gray-300 font-medium px-4">
                     0x9084... puts their money where their mouth is with a yes of {randomYesAmount} MON on{" "}
@@ -315,7 +315,7 @@ const PredictionSite = () => {
                   </div>
                   <input
                     type="range"
-                    min="0.034"
+                    min="0.5"
                     max="100"
                     step="0.1"
                     value={voteAmount}

@@ -3,8 +3,6 @@ import Link from "next/link";
 import { MonadLogo } from "./assets/MonadLogo";
 import { hardhat } from "viem/chains";
 import { CurrencyDollarIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { HeartIcon } from "@heroicons/react/24/outline";
-import { BuidlGuidlLogo } from "~~/components/assets/BuidlGuidlLogo";
 import { Faucet } from "~~/components/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { useGlobalState } from "~~/services/store/store";
@@ -48,23 +46,11 @@ export const Footer = () => {
             <div className="text-center">
               {/* TODO: add the scaffold-eth-monad repo link */}
               <a href="https://github.com/scaffold-eth/se-2" target="_blank" rel="noreferrer" className="link">
-                Fork me
+                @muffledbird
               </a>
             </div>
             <span>·</span>
             <div className="flex justify-center items-center gap-2">
-              <p className="m-0 text-center">
-                Built with <HeartIcon className="inline-block h-4 w-4" /> at
-              </p>
-              <a
-                className="flex justify-center items-center gap-1"
-                href="https://buidlguidl.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <BuidlGuidlLogo className="w-3 h-5 pb-1" />
-                <span className="link">BuidlGuidl</span>
-              </a>
               <p>and</p>
               <a
                 className="flex justify-center items-center gap-1"
@@ -77,12 +63,7 @@ export const Footer = () => {
               </a>
             </div>
             <span>·</span>
-            <div className="text-center">
-              <a href="https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA" target="_blank" rel="noreferrer" className="link">
-                {/* TODO: Add link to github repo to create issue */}
-                Support
-              </a>
-            </div>
+            <div className="text-center"></div>
           </div>
         </ul>
       </div>
