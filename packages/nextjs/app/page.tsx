@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import contractABI from "./abi/predicts.json";
+import { useNotification } from "./context/NotificationContext";
 import { entertainmentPredictions } from "./predicts/entertainment";
 import { newsPredictions } from "./predicts/news";
 import { politicsPredictions } from "./predicts/politics";
@@ -13,18 +14,16 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 const categories = ["Sports", "Politics", "News", "Entertainment"];
 // Replace with the actual path to your contract ABI
 
-const contractAddress = "0x241f273F8162B9B8B131931ce5a930c231d92982"; // Replace with your deployed contract address
+const contractAddress = "0x70b5e9F41e4004069298132C96605f9f4ae249b9"; // Replace with your deployed contract address
 
 const getContract = () => {
-  if (!window.ethereum) {
+  if (typeof window === "undefined" || !window.ethereum) {
     throw new Error("Ethereum provider not found");
   }
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
   return new ethers.Contract(contractAddress, contractABI, signer);
 };
-
-const contract = getContract(); // Keep it scoped locally
 
 type Prediction = {
   id: number;
@@ -52,7 +51,19 @@ const PredictionSite = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState(filters[0]);
   const [selectedPrediction, setSelectedPrediction] = useState<(Prediction & { voteType: string }) | null>(null);
-  const [voteAmount, setVoteAmount] = useState<number>(0.1);
+  const [voteAmount, setVoteAmount] = useState<number>(0.034);
+  const [contract, setContract] = useState<ethers.Contract | null>(null);
+
+  useEffect(() => {
+    try {
+      const contractInstance = getContract();
+      setContract(contractInstance);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  const { addNotification } = useNotification();
 
   const filteredPredictions = predictions.filter(
     prediction =>
@@ -61,7 +72,7 @@ const PredictionSite = () => {
 
   const handleVoteClick = (prediction: Prediction, voteType: string) => {
     setSelectedPrediction({ ...prediction, voteType });
-    setVoteAmount(0.1); // Reset the default amount
+    setVoteAmount(0.034); // Reset the default amount
   };
 
   const handleIncrement = (amount: number) => {
@@ -105,6 +116,12 @@ const PredictionSite = () => {
 
       await tx.wait();
 
+      addNotification({
+        id: Date.now(),
+        title: `Placed bet on prediction ${predictionId}`,
+        countdown: 30,
+      });
+
       console.log("Vote placed successfully", tx);
     } catch (error) {
       console.error("Error while submitting vote:", error);
@@ -137,7 +154,7 @@ const PredictionSite = () => {
               }}
             >
               {predictions.slice(0, 8).map(prediction => {
-                const randomYesAmount = (Math.random() * 0.1).toFixed(3);
+                const randomYesAmount = (Math.random() * 0.034).toFixed(3);
                 return (
                   <span key={prediction.id} className="text-sm text-gray-300 font-medium px-4">
                     0x9084... puts their money where their mouth is with a yes of {randomYesAmount} MON on{" "}
@@ -287,18 +304,18 @@ const PredictionSite = () => {
                       onClick={() => handleIncrement(1)}
                       className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
                     >
-                      +1
+                      +1x
                     </button>
                     <button
-                      onClick={() => handleIncrement(10)}
+                      onClick={() => handleIncrement(0.01)}
                       className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
                     >
-                      +10
+                      +1
                     </button>
                   </div>
                   <input
                     type="range"
-                    min="0.1"
+                    min="0.034"
                     max="100"
                     step="0.1"
                     value={voteAmount}

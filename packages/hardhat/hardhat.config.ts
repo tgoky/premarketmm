@@ -59,20 +59,19 @@ const config: HardhatUserConfig = {
   },
   // configuration for harhdat-verify plugin
   etherscan: {
-    apiKey: `DUMMY_VALUE_FOR_BLOCKSCOUT`,
+    apiKey: "DUMMY_VALUE_FOR_BLOCKSCOUT", // Or use your actual BlockScout API key if available
     customChains: [
       {
         network: "monadDevnet",
-        chainId: 41454,
+        chainId: 20143,
         urls: {
-          browserURL: process.env.MONAD_EXPLORER_URL ?? "https://brightstar-884.devnet1.monad.xyz/",
-          apiURL: process.env.MONAD_EXPLORER_URL
-            ? `${process.env.MONAD_EXPLORER_URL}/api`
-            : "https://brightstar-884.devnet1.monad.xyz/",
+          browserURL: process.env.MONAD_EXPLORER_URL ?? "https://explorer.monad-devnet.devnet101.com/", // Correct explorer URL
+          apiURL: process.env.MONAD_EXPLORER_URL ? `${process.env.MONAD_EXPLORER_URL}/api` : "", // Ensure a valid API URL is available, or leave empty
         },
       },
     ],
   },
+
   sourcify: {
     enabled: false,
   },
