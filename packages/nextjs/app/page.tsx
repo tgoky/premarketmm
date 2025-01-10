@@ -54,6 +54,24 @@ const PredictionSite = () => {
   const [voteAmount, setVoteAmount] = useState<number>(0.5);
   const [contract, setContract] = useState<ethers.Contract | null>(null);
 
+  const [dummyData, setDummyData] = useState<{ name: string; value: number }[]>([]);
+  const COLORS = ["#8884d8", "#82ca9d"];
+
+  // Function to generate random data for Yes/No votes
+  const generateRandomData = () => {
+    const yesVotes = Math.floor(Math.random() * 100) + 50; // Random value between 50 and 150
+    const noVotes = Math.floor(Math.random() * 100) + 50; // Random value between 50 and 150
+    return [
+      { name: "Yes", value: yesVotes },
+      { name: "No", value: noVotes },
+    ];
+  };
+
+  // Set random data when the component mounts
+  useEffect(() => {
+    setDummyData(generateRandomData());
+  }, []);
+
   useEffect(() => {
     try {
       const contractInstance = getContract();
@@ -244,12 +262,7 @@ const PredictionSite = () => {
                 <ResponsiveContainer width="100%" height={100}>
                   <PieChart>
                     <Pie
-                      data={
-                        [
-                          { name: "Yes", value: prediction.yesVotes },
-                          { name: "No", value: prediction.noVotes },
-                        ] as any
-                      } // Use 'as any' if you're confident about the data structure
+                      data={dummyData}
                       dataKey="value"
                       nameKey="name"
                       cx="50%"
@@ -257,8 +270,11 @@ const PredictionSite = () => {
                       outerRadius={50}
                       fill="#8884d8"
                       label
-                    />
-
+                    >
+                      {dummyData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
                     <Tooltip />
                   </PieChart>
                 </ResponsiveContainer>
