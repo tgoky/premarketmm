@@ -17,6 +17,8 @@ type HeaderMenuLink = {
 
 export const menuLinks: HeaderMenuLink[] = [];
 
+const logoImg = "/packages/nextjs/components/pics/muffled-black.PNG";
+
 export const HeaderMenuLinks = () => {
   const pathname = usePathname();
 
@@ -82,12 +84,7 @@ export const Header = () => {
         </div>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
           <div className="flex relative w-6 h-6">
-            <Image
-              alt="SE2 logo"
-              className="cursor-pointer"
-              fill
-              src="/packages/nextjs/components/pics/muffled-black.PNG"
-            />
+            <Image alt="SE2 logo" className="cursor-pointer" fill src={logoImg} />
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">muffled bird</span>
