@@ -8,7 +8,6 @@ import { newsPredictions } from "./predicts/news";
 import { politicsPredictions } from "./predicts/politics";
 import { sportsPredictions } from "./predicts/sports";
 import { ethers } from "ethers";
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 const categories = ["Sports", "Politics", "News", "Entertainment"];
@@ -53,24 +52,6 @@ const PredictionSite = () => {
   const [selectedPrediction, setSelectedPrediction] = useState<(Prediction & { voteType: string }) | null>(null);
   const [voteAmount, setVoteAmount] = useState<number>(0.5);
   const [contract, setContract] = useState<ethers.Contract | null>(null);
-
-  const [dummyData, setDummyData] = useState<{ name: string; value: number }[]>([]);
-  const COLORS = ["#8884d8", "#82ca9d"];
-
-  // Function to generate random data for Yes/No votes
-  const generateRandomData = () => {
-    const yesVotes = Math.floor(Math.random() * 100) + 50; // Random value between 50 and 150
-    const noVotes = Math.floor(Math.random() * 100) + 50; // Random value between 50 and 150
-    return [
-      { name: "Yes", value: yesVotes },
-      { name: "No", value: noVotes },
-    ];
-  };
-
-  // Set random data when the component mounts
-  useEffect(() => {
-    setDummyData(generateRandomData());
-  }, []);
 
   useEffect(() => {
     try {
@@ -258,27 +239,7 @@ const PredictionSite = () => {
               ></div>
               <h3 className="font-bold text-lg">{prediction.title}</h3>
               <p className="text-sm text-gray-400 mt-2">Category: {prediction.category}</p>
-              <div className="mt-4">
-                <ResponsiveContainer width="100%" height={100}>
-                  <PieChart>
-                    <Pie
-                      data={dummyData}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={50}
-                      fill="#8884d8"
-                      label
-                    >
-                      {dummyData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
+              <div className="mt-4"></div>
               <div className="flex justify-between items-center mt-4">
                 <button
                   className={`${
