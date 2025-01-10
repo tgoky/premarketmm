@@ -1,17 +1,16 @@
 export const entertainmentPredictions = [
-    {
-      id: 7,
-      title: "Will Movie X win Best Picture at the Oscars?",
-      category: "Entertainment",
-      yesVotes: 800,
-      noVotes: 150,
-    },
-    {
-      id: 8,
-      title: "Will Artist Y's album break streaming records?",
-      category: "Entertainment",
-      yesVotes: 600,
-      noVotes: 400,
-    },
-  ];
-  
+  {
+    id: 7,
+    title: "Will the Leonardo DiCaprio win another oscar ?",
+    category: "Entertainment",
+    yesVotes: 800,
+    noVotes: 150,
+  },
+  {
+    id: 8,
+    title: "Will  Ye release Bully Album ?",
+    category: "Entertainment",
+    yesVotes: 600,
+    noVotes: 400,
+  },
+];
