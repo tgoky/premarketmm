@@ -2,6 +2,8 @@ The First Prediction Market on the Monad Ecosystem
 
 Be a muffled bird on the monad market !
 
+VISIT: https://muffledbirdmarket.netlify.app/
+
 
 How to Play: Step-by-Step Guide
 Step 1: Set Up Your Wallet

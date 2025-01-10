@@ -7,7 +7,7 @@ import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
 
 export const metadata = getMetadata({
   title: "Muffled Bird",
-  description: "Built with 🏗 Scaffold-ETH 2",
+  description: "Be a Muffled Bird on the Monad Market",
 });
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
