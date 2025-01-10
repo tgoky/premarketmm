@@ -8,7 +8,6 @@ import { newsPredictions } from "./predicts/news";
 import { politicsPredictions } from "./predicts/politics";
 import { sportsPredictions } from "./predicts/sports";
 import { ethers } from "ethers";
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 const categories = ["Sports", "Politics", "News", "Entertainment"];
@@ -240,28 +239,7 @@ const PredictionSite = () => {
               ></div>
               <h3 className="font-bold text-lg">{prediction.title}</h3>
               <p className="text-sm text-gray-400 mt-2">Category: {prediction.category}</p>
-              <div className="mt-4">
-                <ResponsiveContainer width="100%" height={100}>
-                  <PieChart>
-                    <Pie
-                      data={[
-                        { name: "Yes", value: prediction.yesVotes },
-                        { name: "No", value: prediction.noVotes },
-                      ]}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={30}
-                      outerRadius={50}
-                      paddingAngle={5}
-                      dataKey="value"
-                    >
-                      <Cell key="Yes" fill="#10B981" />
-                      <Cell key="No" fill="#EF4444" />
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
+              <div className="mt-4"></div>
               <div className="flex justify-between items-center mt-4">
                 <button
                   className={`${
