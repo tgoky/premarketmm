@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import contractABI from "./abi/predicts.json";
 import { useNotification } from "./context/NotificationContext";
+import { cryptoPredictions } from "./predicts/crypto";
 import { entertainmentPredictions } from "./predicts/entertainment";
 import { newsPredictions } from "./predicts/news";
 import { politicsPredictions } from "./predicts/politics";
@@ -32,7 +33,13 @@ type Prediction = {
   noVotes: number;
 };
 
-const predictions = [...sportsPredictions, ...newsPredictions, ...entertainmentPredictions, ...politicsPredictions];
+const predictions = [
+  ...sportsPredictions,
+  ...newsPredictions,
+  ...entertainmentPredictions,
+  ...politicsPredictions,
+  ...cryptoPredictions,
+];
 
 const filters = ["Recent", "Trending", "2025"];
 
