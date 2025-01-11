@@ -1,16 +1,16 @@
 export const entertainmentPredictions = [
   {
     id: 7,
-    title: "Will the Leonardo DiCaprio win another oscar ?",
+    title: "Will Taylor Swift release a new album in 2025?",
     category: "Entertainment",
-    yesVotes: 800,
-    noVotes: 150,
+    yesVotes: 700,
+    noVotes: 250,
   },
   {
     id: 8,
-    title: "Will  Ye release Bully Album ?",
+    title: "Will Harry Styles win a Grammy next year?",
     category: "Entertainment",
-    yesVotes: 600,
-    noVotes: 400,
+    yesVotes: 750,
+    noVotes: 200,
   },
 ];

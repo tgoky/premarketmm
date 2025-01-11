@@ -13,7 +13,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 const categories = ["Sports", "Politics", "News", "Entertainment"];
 // Replace with the actual path to your contract ABI
 
-const contractAddress = "0x70b5e9F41e4004069298132C96605f9f4ae249b9"; // Replace with your deployed contract address
+const contractAddress = "0xae7b3b7314cf985FbbE7f30d99Cb4eaafd832bb9"; // Replace with your deployed contract address
 
 const getContract = () => {
   if (typeof window === "undefined" || !window.ethereum) {

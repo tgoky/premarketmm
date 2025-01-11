@@ -1,30 +1,30 @@
 export const sportsPredictions = [
   {
     id: 1,
-    title: "Will Lamine Yamal score 5 goals this January?",
+    title: "Will Arsenal Win Manchester United ?",
+    category: "Sports",
+    yesVotes: 400,
+    noVotes: 300,
+  },
+  {
+    id: 2,
+    title: "Will Manchester City win the Premier League this season?",
+    category: "Sports",
+    yesVotes: 450,
+    noVotes: 350,
+  },
+  {
+    id: 3,
+    title: "Will Barcelona Win Real Madrid at the El Clasico?",
     category: "Sports",
     yesVotes: 500,
     noVotes: 200,
   },
   {
-    id: 2,
-    title: "Will Messi retire in Inter Miami ?",
-    category: "Sports",
-    yesVotes: 300,
-    noVotes: 400,
-  },
-  {
-    id: 3,
-    title: "Will Liverpool sign a new player this January Transfer Window?",
-    category: "Sports",
-    yesVotes: 250,
-    noVotes: 350,
-  },
-  {
     id: 4,
-    title: "Will Real Madrid win their next game ?",
+    title: "Will Liverpool win the Premier League this season?",
     category: "Sports",
-    yesVotes: 250,
-    noVotes: 350,
+    yesVotes: 550,
+    noVotes: 150,
   },
 ];
