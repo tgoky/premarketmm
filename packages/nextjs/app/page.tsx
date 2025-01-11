@@ -11,7 +11,7 @@ import { sportsPredictions } from "./predicts/sports";
 import { ethers } from "ethers";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-const categories = ["Sports", "Politics", "News", "Entertainment"];
+const categories = ["Sports", "Politics", "News", "Entertainment,", "Crypto"];
 // Replace with the actual path to your contract ABI
 
 const contractAddress = "0xae7b3b7314cf985FbbE7f30d99Cb4eaafd832bb9"; // Replace with your deployed contract address
