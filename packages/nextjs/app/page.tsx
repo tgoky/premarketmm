@@ -91,37 +91,26 @@ const PredictionSite = () => {
 
   async function handleVoteSubmit(predictionId: number, voteType: string, voteAmount: number) {
     try {
+      const prediction = predictions.find(p => p.id === predictionId);
+      if (!prediction) {
+        alert("Prediction not found.");
+        return;
+      }
+
+      if (prediction.status === "in_motion") {
+        alert("Voting for this prediction is no longer allowed.");
+        return;
+      }
+
+      // Existing voting logic
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-
       const contract = getContract();
 
-      // Fetch prediction details
-      const prediction = await contract.predictions(predictionId);
-
-      if (!prediction) {
-        console.log("Prediction not found");
-        return;
-      }
-
-      const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
-
-      // Check if the prediction is still active
-      if (currentTime > prediction.endTime) {
-        alert("Voting for this prediction has ended.");
-        return;
-      }
-
-      // Convert vote amount to correct units
       const formattedVoteAmount = ethers.utils.parseEther(voteAmount.toString());
-
-      // Submit the vote
-      const tx = await contract.placeBet(predictionId, voteType, {
-        value: formattedVoteAmount,
-      });
+      const tx = await contract.placeBet(predictionId, voteType, { value: formattedVoteAmount });
 
       await tx.wait();
-
       addNotification({
         id: Date.now(),
         title: `Placed bet on prediction ${predictionId}`,
@@ -218,18 +207,14 @@ const PredictionSite = () => {
       {/* Predictions Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-8">
         {filteredPredictions.map(prediction => {
-          const totalVotes = prediction.yesVotes + prediction.noVotes;
+          const totalVotes = prediction.yesVotes + prediction.noVotes || 1; // Avoid division by zero
           const yesPercentage = ((prediction.yesVotes / totalVotes) * 100).toFixed(1);
           const noPercentage = (100 - parseFloat(yesPercentage)).toFixed(1);
 
           const isActive = selectedPrediction?.id === prediction.id;
 
           return (
-            <div
-              key={prediction.id}
-              className="bg-gray-800 rounded-lg p-6 shadow-lg text-center relative"
-              style={{ position: "relative" }}
-            >
+            <div key={prediction.id} className="bg-gray-800 rounded-lg p-6 shadow-lg text-center relative">
               {/* Live Indicator */}
               <div
                 style={{
@@ -246,30 +231,36 @@ const PredictionSite = () => {
               ></div>
               <h3 className="font-bold text-lg">{prediction.title}</h3>
               <p className="text-sm text-gray-400 mt-2">Category: {prediction.category}</p>
-              <div className="mt-4"></div>
-              <div className="flex justify-between items-center mt-4">
-                <button
-                  className={`${
-                    isActive && selectedPrediction?.voteType === "yes"
-                      ? "bg-green-700"
-                      : "bg-green-500 hover:bg-green-600"
-                  } text-white font-bold py-2 px-4 rounded-lg`}
-                  onClick={() => handleVoteClick(prediction, "yes")}
-                >
-                  Yes
-                </button>
-                <button
-                  className={`${
-                    isActive && selectedPrediction?.voteType === "no" ? "bg-red-700" : "bg-red-500 hover:bg-red-600"
-                  } text-white font-bold py-2 px-4 rounded-lg`}
-                  onClick={() => handleVoteClick(prediction, "no")}
-                >
-                  No
-                </button>
-              </div>
-              <p className="mt-4 text-sm">
-                Yes: {yesPercentage}% | No: {noPercentage}%
-              </p>
+
+              {prediction.status === "in_motion" ? (
+                <p className="mt-4 text-red-500 font-semibold">Prediction in Motion</p>
+              ) : (
+                <>
+                  <div className="flex justify-between items-center mt-4">
+                    <button
+                      className={`${
+                        isActive && selectedPrediction?.voteType === "yes"
+                          ? "bg-green-700"
+                          : "bg-green-500 hover:bg-green-600"
+                      } text-white font-bold py-2 px-4 rounded-lg`}
+                      onClick={() => handleVoteClick(prediction, "yes")}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      className={`${
+                        isActive && selectedPrediction?.voteType === "no" ? "bg-red-700" : "bg-red-500 hover:bg-red-600"
+                      } text-white font-bold py-2 px-4 rounded-lg`}
+                      onClick={() => handleVoteClick(prediction, "no")}
+                    >
+                      No
+                    </button>
+                  </div>
+                  <p className="mt-4 text-sm">
+                    Yes: {yesPercentage}% | No: {noPercentage}%
+                  </p>
+                </>
+              )}
 
               {/* Voting Interface */}
               {isActive && (
@@ -279,9 +270,9 @@ const PredictionSite = () => {
                     value={voteAmount.toFixed(2)}
                     className="w-full bg-gray-800 text-white rounded-lg px-4 py-2 mb-4 text-right"
                     style={{
-                      fontSize: "1.5rem", // Increases the font size of the text
+                      fontSize: "1.5rem",
                       lineHeight: "1.2",
-                      textAlign: "center", // Adjusts line spacing if needed
+                      textAlign: "center",
                     }}
                   />
                   <div className="flex justify-between mb-4">

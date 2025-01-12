@@ -5,6 +5,7 @@ export const sportsPredictions = [
     category: "Sports",
     yesVotes: 400,
     noVotes: 300,
+    status: "in_motion",
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ export const sportsPredictions = [
     category: "Sports",
     yesVotes: 450,
     noVotes: 350,
+    status: "open",
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ export const sportsPredictions = [
     category: "Sports",
     yesVotes: 500,
     noVotes: 200,
+    status: "open",
   },
   {
     id: 4,
@@ -26,5 +29,6 @@ export const sportsPredictions = [
     category: "Sports",
     yesVotes: 550,
     noVotes: 150,
+    status: "open",
   },
 ];

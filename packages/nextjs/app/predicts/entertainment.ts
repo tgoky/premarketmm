@@ -5,6 +5,7 @@ export const entertainmentPredictions = [
     category: "Entertainment",
     yesVotes: 700,
     noVotes: 250,
+    status: "open",
   },
   {
     id: 8,
@@ -12,5 +13,6 @@ export const entertainmentPredictions = [
     category: "Entertainment",
     yesVotes: 750,
     noVotes: 200,
+    status: "open",
   },
 ];

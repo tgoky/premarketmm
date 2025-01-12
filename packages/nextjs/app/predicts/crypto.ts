@@ -5,6 +5,7 @@ export const cryptoPredictions = [
     category: "Crypto",
     yesVotes: 950,
     noVotes: 150,
+    status: "open",
   },
   {
     id: 12,
@@ -12,5 +13,6 @@ export const cryptoPredictions = [
     category: "Crypto",
     yesVotes: 600,
     noVotes: 400,
+    status: "open",
   },
 ];

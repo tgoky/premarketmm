@@ -5,6 +5,7 @@ export const newsPredictions = [
     category: "News",
     yesVotes: 650,
     noVotes: 150,
+    status: "open",
   },
   {
     id: 6,
@@ -12,5 +13,6 @@ export const newsPredictions = [
     category: "News",
     yesVotes: 700,
     noVotes: 100,
+    status: "open",
   },
 ];
