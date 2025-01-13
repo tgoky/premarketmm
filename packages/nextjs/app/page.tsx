@@ -31,6 +31,8 @@ type Prediction = {
   category: string;
   yesVotes: number;
   noVotes: number;
+  status: string;
+  resolved: boolean; // or resolved: boolean if you prefer boolean logic
 };
 
 const predictions = [
@@ -75,6 +77,48 @@ const PredictionSite = () => {
     prediction =>
       prediction.category === activeCategory && prediction.title.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+
+  async function handleClaimClick(prediction: Prediction) {
+    try {
+      const userVote = selectedPrediction?.voteType;
+
+      if (!userVote) {
+        alert("You must vote before claiming a reward.");
+        return;
+      }
+
+      // Map "yes" to true and "no" to false for user vote
+      const userVoteBool = userVote === "yes";
+
+      // Fetch the resolved result and resolved status from the contract
+      const contract = getContract();
+      const predictionData = await contract.predictions(prediction.id);
+
+      // Get the resolved status and result from the contract
+      const resolved = predictionData.resolved;
+      const result = predictionData.result;
+
+      // Check if the prediction is resolved and if the user’s vote matches the result
+      if (resolved && ((userVoteBool && result === "yes") || (!userVoteBool && result === "no"))) {
+        // User's vote matches the resolved result, allow claiming the payout
+        const tx = await contract.claimPayout(prediction.id);
+        await tx.wait();
+
+        addNotification({
+          id: Date.now(),
+          title: `Claimed reward for prediction ${prediction.id}`,
+          countdown: 30,
+        });
+
+        console.log("Claim successful", tx);
+      } else {
+        alert("Your prediction does not match the resolved result.");
+      }
+    } catch (error) {
+      console.error("Error while claiming:", error);
+      alert("Failed to claim the reward. Please try again.");
+    }
+  }
 
   const handleVoteClick = (prediction: Prediction, voteType: string) => {
     setSelectedPrediction({ ...prediction, voteType });
@@ -233,7 +277,19 @@ const PredictionSite = () => {
               <p className="text-sm text-gray-400 mt-2">Category: {prediction.category}</p>
 
               {prediction.status === "in_motion" ? (
-                <p className="mt-4 text-red-500 font-semibold">Prediction in Motion</p>
+                <>
+                  <p className="mt-4 text-red-500 font-semibold">Prediction in Motion</p>
+
+                  {/* Add Claim Reward Button only when status is in_motion and resolved is true */}
+                  {prediction.resolved && (
+                    <button
+                      onClick={() => handleClaimClick(prediction)}
+                      className="w-full py-2 mt-4 rounded-lg bg-pink-500 hover:bg-orange-600 text-white font-bold"
+                    >
+                      Claim Payout
+                    </button>
+                  )}
+                </>
               ) : (
                 <>
                   <div className="flex justify-between items-center mt-4">
