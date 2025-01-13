@@ -24,7 +24,7 @@ export const sportsPredictions = [
     yesVotes: 500,
     noVotes: 200,
     status: "in_motion",
-    resolved: false,
+    resolved: true,
   },
   {
     id: 4,

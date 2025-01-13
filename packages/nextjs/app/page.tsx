@@ -78,32 +78,59 @@ const PredictionSite = () => {
       prediction.category === activeCategory && prediction.title.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
+  // Function to get the user's wallet address
+  async function getWalletAddress(): Promise<string | null> {
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      try {
+        const address = await signer.getAddress();
+        return address;
+      } catch (error) {
+        console.error("Error getting wallet address:", error);
+        return null;
+      }
+    } else {
+      console.error("Ethereum wallet not detected.");
+      return null;
+    }
+  }
+
   async function handleClaimClick(prediction: Prediction) {
     try {
-      const userVote = selectedPrediction?.voteType;
+      const walletAddress = await getWalletAddress();
+      if (!walletAddress) {
+        alert("Please connect your wallet first.");
+        return;
+      }
 
-      if (!userVote) {
+      // Get the contract instance
+      const contract = getContract();
+
+      // Fetch user vote data directly from the contract using wallet address and prediction id
+      const userVoteData = await contract.userBets(walletAddress, prediction.id);
+
+      // Check if the user has voted
+      if (!userVoteData || !userVoteData.vote) {
         alert("You must vote before claiming a reward.");
         return;
       }
 
-      // Map "yes" to true and "no" to false for user vote
-      const userVoteBool = userVote === "yes";
+      // Map the vote to a boolean value
+      const userVoteBool = userVoteData.vote === "yes";
 
-      // Fetch the resolved result and resolved status from the contract
-      const contract = getContract();
+      // Fetch prediction data (resolved status and result) from the contract
       const predictionData = await contract.predictions(prediction.id);
-
-      // Get the resolved status and result from the contract
       const resolved = predictionData.resolved;
       const result = predictionData.result;
 
-      // Check if the prediction is resolved and if the user’s vote matches the result
+      // Check if the prediction is resolved and if the user's vote matches the result
       if (resolved && ((userVoteBool && result === "yes") || (!userVoteBool && result === "no"))) {
-        // User's vote matches the resolved result, allow claiming the payout
+        // If the user's vote matches the resolved result, allow claiming the payout
         const tx = await contract.claimPayout(prediction.id);
         await tx.wait();
 
+        // Add notification
         addNotification({
           id: Date.now(),
           title: `Claimed reward for prediction ${prediction.id}`,
