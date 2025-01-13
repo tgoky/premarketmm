@@ -6,6 +6,7 @@ export const cryptoPredictions = [
     yesVotes: 950,
     noVotes: 150,
     status: "open",
+    resolved: false,
   },
   {
     id: 12,
@@ -14,5 +15,6 @@ export const cryptoPredictions = [
     yesVotes: 600,
     noVotes: 400,
     status: "open",
+    resolved: false,
   },
 ];

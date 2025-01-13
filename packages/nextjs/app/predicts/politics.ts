@@ -6,6 +6,7 @@ export const politicsPredictions = [
     yesVotes: 400,
     noVotes: 450,
     status: "open",
+    resolved: false,
   },
   {
     id: 10,
@@ -14,5 +15,6 @@ export const politicsPredictions = [
     yesVotes: 550,
     noVotes: 300,
     status: "open",
+    resolved: false,
   },
 ];
