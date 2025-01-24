@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Modal from "./Modal";
 import contractABI from "./abi/predicts.json";
 import { useNotification } from "./context/NotificationContext";
 import { cryptoPredictions } from "./predicts/crypto";
@@ -61,6 +62,8 @@ const PredictionSite = () => {
   const [selectedPrediction, setSelectedPrediction] = useState<(Prediction & { voteType: string }) | null>(null);
   const [voteAmount, setVoteAmount] = useState<number>(0.5);
   const [contract, setContract] = useState<ethers.Contract | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     try {
@@ -95,12 +98,12 @@ const PredictionSite = () => {
       return null;
     }
   }
-
   async function handleClaimClick(prediction: Prediction) {
     try {
       const walletAddress = await getWalletAddress();
       if (!walletAddress) {
-        alert("Please connect your wallet first.");
+        setModalMessage("Please connect your wallet first.");
+        setModalVisible(true);
         return;
       }
 
@@ -112,7 +115,8 @@ const PredictionSite = () => {
 
       // Check if the user has voted
       if (!userVoteData || !userVoteData.vote) {
-        alert("You must vote before claiming a reward.");
+        setModalMessage("You must make a prediction before claiming a reward.");
+        setModalVisible(true);
         return;
       }
 
@@ -139,11 +143,13 @@ const PredictionSite = () => {
 
         console.log("Claim successful", tx);
       } else {
-        alert("Your prediction does not match the resolved result.");
+        setModalMessage("Your prediction does not match the resolved result.");
+        setModalVisible(true);
       }
     } catch (error) {
       console.error("Error while claiming:", error);
-      alert("Failed to claim the reward. Please try again.");
+      setModalMessage("Failed to claim the reward. Please try again.");
+      setModalVisible(true);
     }
   }
 
@@ -164,12 +170,14 @@ const PredictionSite = () => {
     try {
       const prediction = predictions.find(p => p.id === predictionId);
       if (!prediction) {
-        alert("Prediction not found.");
+        setModalMessage("Prediction not found.");
+        setModalVisible(true);
         return;
       }
 
       if (prediction.status === "in_motion") {
-        alert("Voting for this prediction is no longer allowed.");
+        setModalMessage("Voting for this prediction is no longer allowed.");
+        setModalVisible(true);
         return;
       }
 
@@ -189,9 +197,14 @@ const PredictionSite = () => {
       });
 
       console.log("Vote placed successfully", tx);
+      setModalMessage(
+        "Prediction placed successfully ! good luck chad. Track your predictions at the notification bar",
+      );
+      setModalVisible(true);
     } catch (error) {
       console.error("Error while submitting vote:", error);
-      alert("Failed to place the vote. Please try again.");
+      setModalMessage("Failed to place the prediction. Please try again.");
+      setModalVisible(true);
     }
   }
 
@@ -396,6 +409,7 @@ const PredictionSite = () => {
             </div>
           );
         })}
+        <Modal isOpen={modalVisible} message={modalMessage} onClose={() => setModalVisible(false)} />
       </div>
     </div>
   );

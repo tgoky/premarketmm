@@ -5,8 +5,8 @@ export const politicsPredictions = [
     category: "Politics",
     yesVotes: 400,
     noVotes: 450,
-    status: "open",
-    resolved: false,
+    status: "in_motion",
+    resolved: true,
   },
   {
     id: 10,
