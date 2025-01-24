@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface ModalProps {
   isOpen: boolean;
@@ -15,9 +16,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, message, onClose }) => {
         <button onClick={onClose} className="absolute top-2 right-2 text-white font-bold text-xl">
           ×
         </button>
-        {/* Image added here */}
+        {/* Optimized Image */}
         <div className="absolute top-2 left-2">
-          <img src="/purplelogo.PNG" alt="Logo" className="w-10 h-10 object-contain" />
+          <Image src="/purplelogo.PNG" alt="Logo" width={40} height={40} className="object-contain" />
         </div>
         <br />
         <p className="text-black font-semibold text-lg mt-4">{message}</p>
