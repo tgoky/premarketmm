@@ -4,48 +4,24 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import BirdyTask from "../app/BirdyTask";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { useNotification } from "~~/app/context/NotificationContext";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
+// Import BirdyTask component
+
 type HeaderMenuLink = {
   label: string;
-  href: string;
+  onClick?: () => void;
   icon?: React.ReactNode;
-};
-
-export const menuLinks: HeaderMenuLink[] = [];
-
-export const HeaderMenuLinks = () => {
-  const pathname = usePathname();
-
-  return (
-    <>
-      {menuLinks.map(({ label, href, icon }) => {
-        const isActive = pathname === href;
-        return (
-          <li key={href}>
-            <Link
-              href={href}
-              passHref
-              className={`${
-                isActive ? "bg-secondary shadow-md" : ""
-              } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 bg-black text-sm rounded-full gap-2 grid grid-flow-col`}
-            >
-              {icon}
-              <span>{label}</span>
-            </Link>
-          </li>
-        );
-      })}
-    </>
-  );
 };
 
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
   const burgerMenuRef = useRef<HTMLDivElement>(null);
 
   const { notifications } = useNotification();
@@ -54,6 +30,38 @@ export const Header = () => {
     burgerMenuRef,
     useCallback(() => setIsDrawerOpen(false), []),
   );
+
+  const handleModalToggle = () => {
+    setIsModalOpen(prev => !prev);
+  };
+
+  const menuLinks: HeaderMenuLink[] = [
+    {
+      label: "Birdy Task: be a muffled bird",
+      onClick: handleModalToggle, // Open the modal on click
+      icon: <Bars3Icon className="w-4 h-4" />,
+    },
+  ];
+
+  const HeaderMenuLinks = () => {
+    const pathname = usePathname();
+
+    return (
+      <>
+        {menuLinks.map(({ label, onClick, icon }) => (
+          <li key={label}>
+            <button
+              onClick={onClick}
+              className="hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 bg-black text-sm rounded-full gap-2 grid grid-flow-col"
+            >
+              {icon}
+              <span>{label}</span>
+            </button>
+          </li>
+        ))}
+      </>
+    );
+  };
 
   return (
     <div className="sticky lg:static bg-black top-0 navbar bg-base-200 min-h-0 flex-shrink-0 justify-between z-20 border-b-2 border-base-100 px-0 sm:px-2 py-4">
@@ -129,10 +137,25 @@ export const Header = () => {
             </div>
           )}
         </div>
-
         <RainbowKitCustomConnectButton />
         <FaucetButton />
       </div>
+
+      {/* Modal Implementation */}
+      {/* Modal Implementation */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-hidden">
+          <div className="relative bg-gray-900 rounded-lg p-6 max-w-4xl w-full max-h-screen overflow-y-auto">
+            <button
+              onClick={handleModalToggle}
+              className="absolute top-4 right-4 text-white bg-red-500 hover:bg-red-600 rounded-full px-4 py-2"
+            >
+              Close
+            </button>
+            <BirdyTask /> {/* Render the BirdyTask component */}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import BirdyTask from "./BirdyTask";
 import Modal from "./Modal";
 import contractABI from "./abi/predicts.json";
 import { useNotification } from "./context/NotificationContext";
