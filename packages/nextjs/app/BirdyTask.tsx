@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 const BirdyTask = () => {
@@ -11,7 +10,7 @@ const BirdyTask = () => {
     {
       title: "Follow us on Twitter",
       description: "Stay updated with our latest announcements and updates.",
-      link: "https://twitter.com/yourhandle",
+      link: "https://x.com/yourhandle",
       buttonText: "Follow on Twitter",
     },
     {
@@ -35,7 +34,7 @@ const BirdyTask = () => {
       {/* Single Rectangle Card */}
       <div className="bg-gray-800 shadow-lg hover:shadow-xl transition rounded-lg overflow-hidden w-full max-w-5xl">
         {/* Single Image */}
-        <Image src={image.src} alt={image.alt} className="object-cover w-full h-64" width={1200} height={400} />
+        <img src={image.src} alt={image.alt} className="object-cover w-full h-64" />
 
         {/* Tasks Section */}
         <div className="p-6">
