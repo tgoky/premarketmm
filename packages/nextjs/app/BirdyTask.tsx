@@ -10,8 +10,8 @@ const BirdyTask = () => {
     {
       title: "Follow us on Twitter",
       description: "Stay updated with our latest announcements and updates.",
-      link: "https://x.com/yourhandle",
-      buttonText: "Follow on Twitter",
+      link: "https://x.com/muffledbird",
+      buttonText: "Follow on X",
     },
     {
       title: "Join our Telegram",
@@ -21,7 +21,7 @@ const BirdyTask = () => {
     },
     {
       title: "Join our Discord",
-      description: "Engage with the community and find helpful resources.",
+      description: "Engage with the community, get roles  and find helpful resources.",
       link: "https://discord.gg/yourdiscord",
       buttonText: "Join Discord",
     },
@@ -29,7 +29,7 @@ const BirdyTask = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col items-center p-6">
-      <h1 className="text-4xl font-bold text-white mb-8">Birdy Tasks</h1>
+      <h1 className="text-4xl font-bold text-white mb-8">be a muffled bird !</h1>
 
       {/* Single Rectangle Card */}
       <div className="bg-gray-800 shadow-lg hover:shadow-xl transition rounded-lg overflow-hidden w-full max-w-5xl">
@@ -48,7 +48,7 @@ const BirdyTask = () => {
                 <p className="text-gray-400">{task.description}</p>
               </div>
               <Link href={task.link} target="_blank" rel="noopener noreferrer" passHref>
-                <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">
+                <button className="bg-pink-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg">
                   {task.buttonText}
                 </button>
               </Link>
