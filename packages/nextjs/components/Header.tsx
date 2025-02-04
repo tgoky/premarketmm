@@ -16,6 +16,8 @@ type HeaderMenuLink = {
   label: string;
   onClick?: () => void;
   icon?: React.ReactNode;
+  href?: string; // Optional href property for external links
+  external?: boolean; // Optional flag to indicate it's an external link
 };
 
 export const Header = () => {
@@ -41,6 +43,13 @@ export const Header = () => {
       onClick: handleModalToggle, // Open the modal on click
       icon: <Bars3Icon className="w-4 h-4" />,
     },
+    {
+      label: "Visit the Birds", // Label for the new menu item
+      onClick: () => {}, // No click behavior needed, since it's an anchor link
+      icon: <Bars3Icon className="w-4 h-4" />, // You can customize the icon if desired
+      href: "https://muffledbirds.netlify.app/", // External website link
+      external: true, // Add a flag to indicate it's an external link
+    },
   ];
 
   const HeaderMenuLinks = () => {
@@ -48,15 +57,27 @@ export const Header = () => {
 
     return (
       <>
-        {menuLinks.map(({ label, onClick, icon }) => (
+        {menuLinks.map(({ label, onClick, icon, href, external }) => (
           <li key={label}>
-            <button
-              onClick={onClick}
-              className="hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 bg-black text-sm rounded-full gap-2 grid grid-flow-col"
-            >
-              {icon}
-              <span>{label}</span>
-            </button>
+            {external ? (
+              <a
+                href={href}
+                target="_blank" // Opens the link in a new tab
+                rel="noopener noreferrer" // Security feature to prevent vulnerabilities
+                className="hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 bg-black text-sm rounded-full gap-2 grid grid-flow-col"
+              >
+                {icon}
+                <span>{label}</span>
+              </a>
+            ) : (
+              <button
+                onClick={onClick}
+                className="hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 bg-black text-sm rounded-full gap-2 grid grid-flow-col"
+              >
+                {icon}
+                <span>{label}</span>
+              </button>
+            )}
           </li>
         ))}
       </>
@@ -141,7 +162,6 @@ export const Header = () => {
         <FaucetButton />
       </div>
 
-      {/* Modal Implementation */}
       {/* Modal Implementation */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-hidden">

@@ -299,7 +299,10 @@ const PredictionSite = () => {
           const isActive = selectedPrediction?.id === prediction.id;
 
           return (
-            <div key={prediction.id} className="bg-gray-800 rounded-lg p-6 shadow-lg text-center relative">
+            <div
+              key={prediction.id}
+              className="bg-gray-800 rounded-lg p-6 shadow-lg text-center relative hover:border-blue-500 hover:border-2 transition-all duration-300"
+            >
               {/* Live Indicator */}
               <div
                 style={{

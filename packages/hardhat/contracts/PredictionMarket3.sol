@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract PredictionMarket3 {
+contract PredictionMarket5 {
 
     struct Prediction {
         uint256 id;
