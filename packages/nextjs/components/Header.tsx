@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import BirdyTask from "../app/BirdyTask";
-import { Bars3Icon } from "@heroicons/react/24/outline";
+import { Bars3Icon, ClipboardDocumentCheckIcon, CommandLineIcon } from "@heroicons/react/24/outline";
 import { useNotification } from "~~/app/context/NotificationContext";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
@@ -25,6 +25,7 @@ export const Header = () => {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
   const burgerMenuRef = useRef<HTMLDivElement>(null);
+  const [isBirdyTaskOpen, setIsBirdyTaskOpen] = useState(false);
 
   const { notifications } = useNotification();
 
@@ -41,12 +42,12 @@ export const Header = () => {
     {
       label: "Birdy Task: be a muffled bird",
       onClick: handleModalToggle, // Open the modal on click
-      icon: <Bars3Icon className="w-4 h-4" />,
+      icon: <ClipboardDocumentCheckIcon className="w-4 h-4" />,
     },
     {
       label: "Visit the Birds", // Label for the new menu item
       onClick: () => {}, // No click behavior needed, since it's an anchor link
-      icon: <Bars3Icon className="w-4 h-4" />, // You can customize the icon if desired
+      icon: <CommandLineIcon className="w-4 h-4" />, // You can customize the icon if desired
       href: "https://muffledbirds.netlify.app/", // External website link
       external: true, // Add a flag to indicate it's an external link
     },

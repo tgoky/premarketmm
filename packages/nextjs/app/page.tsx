@@ -3,17 +3,21 @@
 import { useEffect, useState } from "react";
 import BirdyTask from "./BirdyTask";
 import Modal from "./Modal";
+import TradingViewChart from "./TradingViewChart";
 import contractABI from "./abi/predicts.json";
 import { useNotification } from "./context/NotificationContext";
 import { cryptoPredictions } from "./predicts/crypto";
 import { entertainmentPredictions } from "./predicts/entertainment";
+import { nartPrediction } from "./predicts/narts";
 import { newsPredictions } from "./predicts/news";
 import { politicsPredictions } from "./predicts/politics";
 import { sportsPredictions } from "./predicts/sports";
+import { chartPrediction } from "./predicts/tcharts";
+import { tickerPrediction } from "./predicts/tickers";
 import { ethers } from "ethers";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-const categories = ["Sports", "Politics", "News", "Entertainment", "Crypto"];
+const categories = ["Sports", "Politics", "News", "TradingCharts", "Crypto", "DEFI", "FloorPrices"];
 // Replace with the actual path to your contract ABI
 
 const contractAddress = "0xae7b3b7314cf985FbbE7f30d99Cb4eaafd832bb9"; // Replace with your deployed contract address
@@ -30,11 +34,13 @@ const getContract = () => {
 type Prediction = {
   id: number;
   title: string;
-  category: string;
+  category?: string;
   yesVotes: number;
   noVotes: number;
   status: string;
-  resolved: boolean; // or resolved: boolean if you prefer boolean logic
+  resolved: boolean;
+  tradingPair?: string | null; // or resolved: boolean if you prefer boolean logic
+  nftCollectionSlug?: string | null;
 };
 
 const predictions = [
@@ -43,6 +49,9 @@ const predictions = [
   ...entertainmentPredictions,
   ...politicsPredictions,
   ...cryptoPredictions,
+  ...chartPrediction,
+  ...tickerPrediction,
+  ...nartPrediction,
 ];
 
 const filters = ["Recent", "Trending", "2025"];
@@ -57,7 +66,7 @@ const PredictionSite = () => {
   `}
   </style>;
 
-  const [activeCategory, setActiveCategory] = useState("Sports");
+  const [activeCategory, setActiveCategory] = useState("TradingCharts");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState(filters[0]);
   const [selectedPrediction, setSelectedPrediction] = useState<(Prediction & { voteType: string }) | null>(null);
@@ -79,7 +88,8 @@ const PredictionSite = () => {
 
   const filteredPredictions = predictions.filter(
     prediction =>
-      prediction.category === activeCategory && prediction.title.toLowerCase().includes(searchTerm.toLowerCase()),
+      prediction.category?.toLowerCase() === activeCategory.toLowerCase() &&
+      prediction.title.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   // Function to get the user's wallet address
@@ -296,12 +306,16 @@ const PredictionSite = () => {
           const yesPercentage = ((prediction.yesVotes / totalVotes) * 100).toFixed(1);
           const noPercentage = (100 - parseFloat(yesPercentage)).toFixed(1);
 
+          const isWide = !!prediction.tradingPair; // Check if prediction has a chart
+
           const isActive = selectedPrediction?.id === prediction.id;
 
           return (
             <div
               key={prediction.id}
-              className="bg-gray-800 rounded-lg p-6 shadow-lg text-center relative hover:border-blue-500 hover:border-2 transition-all duration-300"
+              className={`bg-gray-800 rounded-lg p-6 shadow-lg text-center relative hover:border-blue-500 hover:border-2 transition-all duration-300 ${
+                isWide ? "md:col-span-2" : "md:col-span-1" // Make trading chart take 2 columns
+              }`}
             >
               {/* Live Indicator */}
               <div
@@ -319,6 +333,12 @@ const PredictionSite = () => {
               ></div>
               <h3 className="font-bold text-lg">{prediction.title}</h3>
               <p className="text-sm text-gray-400 mt-2">Category: {prediction.category}</p>
+              {/* Show Trading Chart if available */}
+              {prediction.tradingPair && (
+                <div className="mt-4">
+                  <TradingViewChart tradingPair={prediction.tradingPair} />
+                </div>
+              )}
 
               {prediction.status === "in_motion" ? (
                 <>

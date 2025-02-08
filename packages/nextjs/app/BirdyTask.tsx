@@ -46,8 +46,13 @@ const BirdyTask = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col items-center p-6">
-      <h1 className="text-4xl font-bold text-white mb-8">Be a Muffled Bird!</h1>
-
+      <h1 className="text-4xl font-bold text-white mb-8 " style={{ fontFamily: "'Rubik Scribble', sans-serif" }}>
+        Be a Muffled Bird!
+      </h1>
+      <h1 className="text-1xl font-bold text-white mb-8">
+        notice: its peremptory to follow instructions and become a full fledged muffled bird
+      </h1>
+      <h1 className="text-1x font-bold text-purple-500 mb-8">we would love to build an eligible community with you </h1>
       {/* Single Rectangle Card */}
       <div className="bg-gray-800 shadow-lg hover:shadow-xl transition rounded-lg overflow-hidden w-full max-w-5xl">
         {/* Single Image */}
