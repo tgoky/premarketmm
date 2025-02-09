@@ -7,7 +7,6 @@ import TradingViewChart from "./TradingViewChart";
 import contractABI from "./abi/predicts.json";
 import { useNotification } from "./context/NotificationContext";
 import { cryptoPredictions } from "./predicts/crypto";
-import { entertainmentPredictions } from "./predicts/entertainment";
 import { nartPrediction } from "./predicts/narts";
 import { newsPredictions } from "./predicts/news";
 import { politicsPredictions } from "./predicts/politics";
@@ -46,7 +45,6 @@ type Prediction = {
 const predictions = [
   ...sportsPredictions,
   ...newsPredictions,
-  ...entertainmentPredictions,
   ...politicsPredictions,
   ...cryptoPredictions,
   ...chartPrediction,
@@ -263,9 +261,13 @@ const PredictionSite = () => {
           <button
             key={category}
             onClick={() => setActiveCategory(category)}
-            className={`py-2 px-4 rounded-lg font-semibold ${
-              activeCategory === category ? "bg-purple-600 text-white" : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-            }`}
+            className={`relative py-2 px-5 rounded-lg font-bold uppercase tracking-wider transition-all
+                    ${
+                      activeCategory === category
+                        ? "bg-purple-600 text-white border-4 border-purple-700 shadow-[4px_4px_0px_#4c1d95]"
+                        : "bg-gray-700 text-gray-300 border-4 border-gray-800 shadow-[4px_4px_0px_#1f2937] hover:bg-gray-600 hover:shadow-[2px_2px_0px_#1f2937] hover:translate-x-[2px] hover:translate-y-[2px]"
+                    }
+                    active:shadow-[1px_1px_0px_#1f2937] active:translate-x-[4px] active:translate-y-[4px]`}
           >
             {category}
           </button>
@@ -358,19 +360,26 @@ const PredictionSite = () => {
                 <>
                   <div className="flex justify-between items-center mt-4">
                     <button
-                      className={`${
-                        isActive && selectedPrediction?.voteType === "yes"
-                          ? "bg-green-700"
-                          : "bg-green-500 hover:bg-green-600"
-                      } text-white font-bold py-2 px-4 rounded-lg`}
+                      className={`relative py-2 px-5 rounded-lg font-bold uppercase tracking-wide transition-all border-4
+    ${
+      isActive && selectedPrediction?.voteType === "yes"
+        ? "bg-green-700 border-green-900 shadow-[4px_4px_0px_#14532D]"
+        : "bg-green-500 border-green-700 shadow-[4px_4px_0px_#166534] hover:bg-green-600 hover:shadow-[2px_2px_0px_#14532D] hover:translate-x-[2px] hover:translate-y-[2px]"
+    }
+    active:shadow-[1px_1px_0px_#14532D] active:translate-x-[4px] active:translate-y-[4px]`}
                       onClick={() => handleVoteClick(prediction, "yes")}
                     >
                       Yes
                     </button>
+
                     <button
-                      className={`${
-                        isActive && selectedPrediction?.voteType === "no" ? "bg-red-700" : "bg-red-500 hover:bg-red-600"
-                      } text-white font-bold py-2 px-4 rounded-lg`}
+                      className={`relative py-2 px-5 rounded-lg font-bold uppercase tracking-wide transition-all border-4
+    ${
+      isActive && selectedPrediction?.voteType === "no"
+        ? "bg-red-700 border-red-900 shadow-[4px_4px_0px_#7F1D1D]"
+        : "bg-red-500 border-red-700 shadow-[4px_4px_0px_#991B1B] hover:bg-red-600 hover:shadow-[2px_2px_0px_#7F1D1D] hover:translate-x-[2px] hover:translate-y-[2px]"
+    }
+    active:shadow-[1px_1px_0px_#7F1D1D] active:translate-x-[4px] active:translate-y-[4px]`}
                       onClick={() => handleVoteClick(prediction, "no")}
                     >
                       No
@@ -398,13 +407,18 @@ const PredictionSite = () => {
                   <div className="flex justify-between mb-4">
                     <button
                       onClick={() => handleIncrement(1)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
+                      className="relative bg-blue-500 text-white font-bold py-2 px-4 rounded-lg text-sm uppercase tracking-wider border-4 border-blue-700 shadow-[3px_3px_0px_#1E3A8A] transition-all
+  hover:bg-blue-600 hover:shadow-[2px_2px_0px_#1E40AF] hover:translate-x-[1px] hover:translate-y-[1px]
+  active:shadow-[1px_1px_0px_#1E40AF] active:translate-x-[2px] active:translate-y-[2px]"
                     >
                       +1x
                     </button>
+
                     <button
                       onClick={() => handleIncrement(0.01)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
+                      className="relative bg-blue-500 text-white font-bold py-2 px-4 rounded-lg text-sm uppercase tracking-wider border-4 border-blue-700 shadow-[3px_3px_0px_#1E3A8A] transition-all
+  hover:bg-blue-600 hover:shadow-[2px_2px_0px_#1E40AF] hover:translate-x-[1px] hover:translate-y-[1px]
+  active:shadow-[1px_1px_0px_#1E40AF] active:translate-x-[2px] active:translate-y-[2px]"
                     >
                       +1
                     </button>
@@ -420,11 +434,12 @@ const PredictionSite = () => {
                   />
                   <button
                     onClick={e => handleVoteSubmit(selectedPrediction.id, selectedPrediction.voteType, voteAmount)}
-                    className={`w-full py-2 mt-4 rounded-lg font-bold ${
-                      selectedPrediction.voteType === "yes"
-                        ? "bg-green-500 hover:bg-green-600"
-                        : "bg-red-500 hover:bg-red-600"
-                    }`}
+                    className={`relative w-full py-2 mt-4 rounded-lg font-semibold text-sm uppercase tracking-wide text-white transition-all border-4
+    ${
+      selectedPrediction.voteType === "yes"
+        ? "bg-green-500 border-green-700 shadow-[3px_3px_0px_#166534] hover:bg-green-600 hover:shadow-[2px_2px_0px_#14532D] hover:translate-x-[1px] hover:translate-y-[1px] active:shadow-[1px_1px_0px_#14532D] active:translate-x-[2px] active:translate-y-[2px]"
+        : "bg-red-500 border-red-700 shadow-[3px_3px_0px_#991B1B] hover:bg-red-600 hover:shadow-[2px_2px_0px_#7F1D1D] hover:translate-x-[1px] hover:translate-y-[1px] active:shadow-[1px_1px_0px_#7F1D1D] active:translate-x-[2px] active:translate-y-[2px]"
+    }`}
                   >
                     Say {selectedPrediction.voteType.toUpperCase()} to win {(voteAmount * 2).toFixed(2)} MON
                   </button>

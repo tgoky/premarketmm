@@ -63,10 +63,12 @@ const config: HardhatUserConfig = {
     customChains: [
       {
         network: "monadDevnet",
-        chainId: 20143,
+        chainId: 10143,
         urls: {
-          browserURL: process.env.MONAD_EXPLORER_URL ?? "https://explorer.monad-devnet.devnet101.com/", // Correct explorer URL
-          apiURL: process.env.MONAD_EXPLORER_URL ? `${process.env.MONAD_EXPLORER_URL}/api` : "", // Ensure a valid API URL is available, or leave empty
+          browserURL: process.env.MONAD_EXPLORER_URL ?? "https://explorer.monad-testnet.category.xyz ", // Correct explorer URL
+          apiURL: process.env.MONAD_EXPLORER_URL
+            ? `${process.env.MONAD_EXPLORER_URL}/api`
+            : "https://explorer.monad-testnet.category.xyz ", // Ensure a valid API URL is available, or leave empty
         },
       },
     ],

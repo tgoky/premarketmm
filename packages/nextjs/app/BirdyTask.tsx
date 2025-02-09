@@ -73,13 +73,19 @@ const BirdyTask = () => {
               {!task.completed ? (
                 <div className="flex gap-2">
                   <Link href={task.link} target="_blank" rel="noopener noreferrer" passHref>
-                    <button className="bg-pink-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg">
+                    <button
+                      className="bg-pink-500 text-white font-semibold py-2 px-4 rounded-lg border-4 border-pink-700 shadow-[3px_3px_0px_#9D174D] transition-all 
+  hover:bg-purple-600 hover:shadow-[2px_2px_0px_#6B21A8] hover:translate-x-[1px] hover:translate-y-[1px]
+  active:shadow-[1px_1px_0px_#6B21A8] active:translate-x-[2px] active:translate-y-[2px]"
+                    >
                       {task.buttonText}
                     </button>
                   </Link>
                   <button
                     onClick={() => handleVerify(task.id)}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg"
+                    className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg border-4 border-blue-700 shadow-[3px_3px_0px_#1E3A8A] transition-all 
+  hover:bg-blue-600 hover:shadow-[2px_2px_0px_#1E40AF] hover:translate-x-[1px] hover:translate-y-[1px]
+  active:shadow-[1px_1px_0px_#1E40AF] active:translate-x-[2px] active:translate-y-[2px]"
                   >
                     Verify
                   </button>

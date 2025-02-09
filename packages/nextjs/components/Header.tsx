@@ -169,9 +169,11 @@ export const Header = () => {
           <div className="relative bg-gray-900 rounded-lg p-6 max-w-4xl w-full max-h-screen overflow-y-auto">
             <button
               onClick={handleModalToggle}
-              className="absolute top-4 right-4 text-white bg-red-500 hover:bg-red-600 rounded-full px-4 py-2"
+              className="absolute top-4 right-4 bg-red-500 text-white font-bold px-4 py-2 rounded-full border-4 border-red-700 shadow-[3px_3px_0px_#7F1D1D] transition-all
+  hover:bg-red-600 hover:shadow-[2px_2px_0px_#991B1B] hover:translate-x-[1px] hover:translate-y-[1px]
+  active:shadow-[1px_1px_0px_#991B1B] active:translate-x-[2px] active:translate-y-[2px]"
             >
-              Close
+              ✖ Close
             </button>
             <BirdyTask /> {/* Render the BirdyTask component */}
           </div>
