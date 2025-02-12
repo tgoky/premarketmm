@@ -48,7 +48,7 @@ export const Header = () => {
       label: "Visit the Birds", // Label for the new menu item
       onClick: () => {}, // No click behavior needed, since it's an anchor link
       icon: <CommandLineIcon className="w-4 h-4" />, // You can customize the icon if desired
-      href: "https://muffledbirds.netlify.app/", // External website link
+      href: "https://birds.muffledbirdmarket.online/", // External website link
       external: true, // Add a flag to indicate it's an external link
     },
   ];

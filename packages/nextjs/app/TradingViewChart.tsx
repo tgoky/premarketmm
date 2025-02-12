@@ -22,7 +22,7 @@ const TradingViewChart = ({ tradingPair }: { tradingPair: string }) => {
       colorTheme: "dark",
       trendLineColor: "#8436b1",
       underLineColor: "rgba(134, 25, 181, 0.2)",
-      isTransparent: true,
+      isTransparent: false,
       autosize: true,
     });
 
