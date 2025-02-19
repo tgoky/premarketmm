@@ -26,6 +26,8 @@ const TradingViewChart = ({ tradingPair }: { tradingPair: string }) => {
       autosize: true,
     });
 
+    //updated
+
     containerRef.current.appendChild(script);
   }, [tradingPair]);
 

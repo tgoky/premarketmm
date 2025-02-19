@@ -68,7 +68,7 @@ const PredictionSite = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState(filters[0]);
   const [selectedPrediction, setSelectedPrediction] = useState<(Prediction & { voteType: string }) | null>(null);
-  const [voteAmount, setVoteAmount] = useState<number>(0.5);
+  const [voteAmount, setVoteAmount] = useState<number>(0.2);
   const [contract, setContract] = useState<ethers.Contract | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -164,7 +164,7 @@ const PredictionSite = () => {
 
   const handleVoteClick = (prediction: Prediction, voteType: string) => {
     setSelectedPrediction({ ...prediction, voteType });
-    setVoteAmount(0.5); // Reset the default amount
+    setVoteAmount(0.2); // Reset the default amount
   };
 
   const handleIncrement = (amount: number) => {
