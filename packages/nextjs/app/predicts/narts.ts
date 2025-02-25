@@ -5,8 +5,8 @@ export const nartPrediction = [
     category: "FloorPrices",
     yesVotes: 1200,
     noVotes: 300,
-    status: "open",
-    resolved: false,
+    status: "in_motion",
+    resolved: true,
     tradingPair: null,
     // OpenSea slug for BAYC
   },
@@ -40,6 +40,28 @@ export const nartPrediction = [
     noVotes: 400,
     status: "open",
     resolved: false,
+    tradingPair: null,
+    // OpenSea slug for CryptoPunks
+  },
+  {
+    id: 37,
+    title: "Omo",
+    category: "FloorPrices",
+    yesVotes: 900,
+    noVotes: 400,
+    status: "in_motion",
+    resolved: true,
+    tradingPair: null,
+    // OpenSea slug for CryptoPunks
+  },
+  {
+    id: 38,
+    title: "Omo",
+    category: "FloorPrices",
+    yesVotes: 900,
+    noVotes: 400,
+    status: "in_motion",
+    resolved: true,
     tradingPair: null,
     // OpenSea slug for CryptoPunks
   },

@@ -19,7 +19,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 const categories = ["Sports", "Politics", "News", "TradingCharts", "Crypto", "DEFI", "FloorPrices"];
 // Replace with the actual path to your contract ABI
 
-const contractAddress = "0xCF078031f890Ed361442e09ebA6Ec255A47d6E72"; // Replace with your deployed contract address
+const contractAddress = "0xa03EaB35039D3b7146896ff2082A26248055e6e0"; // Replace with your deployed contract address
 
 const getContract = () => {
   if (typeof window === "undefined" || !window.ethereum) {
@@ -68,7 +68,7 @@ const PredictionSite = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState(filters[0]);
   const [selectedPrediction, setSelectedPrediction] = useState<(Prediction & { voteType: string }) | null>(null);
-  const [voteAmount, setVoteAmount] = useState<number>(0.2);
+  const [voteAmount, setVoteAmount] = useState<number>(0.01);
   const [contract, setContract] = useState<ethers.Contract | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -164,7 +164,7 @@ const PredictionSite = () => {
 
   const handleVoteClick = (prediction: Prediction, voteType: string) => {
     setSelectedPrediction({ ...prediction, voteType });
-    setVoteAmount(0.2); // Reset the default amount
+    setVoteAmount(0.04); // Reset the default amount
   };
 
   const handleIncrement = (amount: number) => {

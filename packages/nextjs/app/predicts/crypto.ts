@@ -75,8 +75,8 @@ export const cryptoPredictions = [
     category: "Crypto",
     yesVotes: 600,
     noVotes: 400,
-    status: "open",
-    resolved: false,
+    status: "in_motion",
+    resolved: true,
     tradingPair: null,
   },
 ];

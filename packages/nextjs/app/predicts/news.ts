@@ -5,8 +5,8 @@ export const newsPredictions = [
     category: "News",
     yesVotes: 700,
     noVotes: 100,
-    status: "open",
-    resolved: false,
+    status: "in_motion",
+    resolved: true,
     tradingPair: null,
   },
   {
