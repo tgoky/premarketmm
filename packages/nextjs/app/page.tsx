@@ -164,7 +164,7 @@ const PredictionSite = () => {
 
   const handleVoteClick = (prediction: Prediction, voteType: string) => {
     setSelectedPrediction({ ...prediction, voteType });
-    setVoteAmount(0.04); // Reset the default amount
+    setVoteAmount(0.01); // Reset the default amount
   };
 
   const handleIncrement = (amount: number) => {
